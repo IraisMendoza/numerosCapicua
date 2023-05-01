@@ -1,0 +1,90 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+public class Capicua {
+
+    public static void main(String[] args) {
+
+        Scanner sn = new Scanner(System.in);
+
+        System.out.println("Introduce un numero");
+        int numero = sn.nextInt();
+
+        int original[] = devuelveDigitos(numero);
+        int invertido[] = invertirArray(original);
+
+        if(Arrays.equals(original, invertido)){
+            System.out.println("El numero " + numero + " es capicua");
+        }else{
+            System.out.println("El numero " + numero + " no es capicua");
+        }
+
+
+    }
+
+    /**
+     * Invierte los datos de un array
+     *
+     * @param array Array que contiene los datos
+     * @return Devuelve un nuevo array con los datos invertidos
+     */
+    public static int[] invertirArray(int array[]) {
+
+        if (array == null) {
+            return null;
+        }
+
+        int temp[] = new int[array.length];
+
+        for (int i = temp.length - 1, j = 0; i >= 0; i--, j++) {
+            temp[i] = array[j];
+        }
+
+        return temp;
+    }
+
+    public static int[] devuelveDigitos(int numero) {
+
+        // Si el numero es 0
+        // Creamos un array de una posicion
+        if (numero == 0) {
+            int digitos[] = {0};
+            return digitos;
+        }
+
+        // Creamos un array con tantas posiciones como cifras tiene el numero
+        int digitos[] = new int[cuentaCifras(numero)];
+        int digito;
+        // Pasamos el numero a positivo
+        int numeroOriginal = Math.abs(numero);
+        for (int i = 0, j = digitos.length - 1, copiaNumero = numeroOriginal; numeroOriginal > 0; i++, j--) {
+            // Divimos la copia entre 10
+            copiaNumero /= 10;
+            // Obtenemos el digito, numero original menos la copia multiplicada por 10
+            digito = numeroOriginal - (copiaNumero * 10);
+            // guardamos el digito en el array
+            digitos[j] = digito;
+            // Actualizamos el numero original
+            numeroOriginal = copiaNumero;
+        }
+        return digitos;
+    }
+
+    public static int cuentaCifras(int num) {
+
+        int contador = 0;
+
+        if (num == 0) {
+            contador = 1;
+        } else {
+
+            for (int i = Math.abs(num); i > 0; i /= 10) {
+                contador++;
+            }
+
+        }
+
+        return contador;
+    }
+}
